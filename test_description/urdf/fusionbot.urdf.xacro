@@ -16,14 +16,14 @@
   <visual>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <geometry>
-      <mesh filename="package://test_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="$(find test_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <geometry>
-      <mesh filename="package://test_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="$(find test_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -37,14 +37,14 @@
   <visual>
     <origin rpy="0 0 0" xyz="-0.05 -0.0 -0.11"/>
     <geometry>
-      <mesh filename="package://test_description/meshes/lidar_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="$(find test_description)/meshes/lidar_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin rpy="0 0 0" xyz="-0.05 -0.0 -0.11"/>
     <geometry>
-      <mesh filename="package://test_description/meshes/lidar_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="$(find test_description)/meshes/lidar_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -58,14 +58,14 @@
   <visual>
     <origin rpy="0 0 0" xyz="-0.0 0.1 -0.05"/>
     <geometry>
-      <mesh filename="package://test_description/meshes/right_wheel_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="$(find test_description)/meshes/right_wheel_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin rpy="0 0 0" xyz="-0.0 0.1 -0.05"/>
     <geometry>
-      <mesh filename="package://test_description/meshes/right_wheel_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="$(find test_description)/meshes/right_wheel_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -79,14 +79,14 @@
   <visual>
     <origin rpy="0 0 0" xyz="-0.0 -0.1 -0.05"/>
     <geometry>
-      <mesh filename="package://test_description/meshes/left_wheel_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="$(find test_description)/meshes/left_wheel_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin rpy="0 0 0" xyz="-0.0 -0.1 -0.05"/>
     <geometry>
-      <mesh filename="package://test_description/meshes/left_wheel_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="$(find test_description)/meshes/left_wheel_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>

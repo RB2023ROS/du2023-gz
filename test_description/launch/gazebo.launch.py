@@ -19,7 +19,7 @@ from osrf_pycommon.terminal_color import ansi
 def generate_launch_description():
 
     # Prepare Robot State Publisher Params
-    description_pkg_path = os.path.join(get_package_share_directory('fusionbot_description'))
+    description_pkg_path = os.path.join(get_package_share_directory('test_description'))
     pkg_gazebo_ros = FindPackageShare(package='gazebo_ros').find('gazebo_ros')   
 
     # Start Gazebo server
@@ -33,16 +33,8 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(os.path.join(pkg_gazebo_ros, 'launch', 'gzclient.launch.py'))
     )
 
-    # Robot State Publisher
-
-    # Method 1 - using urdf
-    urdf_file = os.path.join(description_pkg_path, 'urdf', 'fusionbot.urdf')
-
-    doc = xacro.parse(open(urdf_file))
-    xacro.process_doc(doc)
-    robot_description = {'robot_description': doc.toxml()}
-
-    # Method 2 - using xacro
+    ### Robot State Publisher
+    # Method 1 - using xacro
     xacro_file = os.path.join(description_pkg_path, 'urdf', 'fusionbot.urdf.xacro')
     robot_description_content = Command(
         [
@@ -58,6 +50,14 @@ def generate_launch_description():
         ]
     )
     robot_description = {"robot_description": robot_description_content}
+
+    # Method 2 - using urdf
+    urdf_file = os.path.join(description_pkg_path, 'urdf', 'fusionbot.urdf')
+
+    doc = xacro.parse(open(urdf_file))
+    xacro.process_doc(doc)
+    robot_description = {'robot_description': doc.toxml()}
+
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
