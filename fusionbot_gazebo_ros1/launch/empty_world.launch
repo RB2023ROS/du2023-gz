@@ -12,7 +12,7 @@
 
   <arg name="world_name"   default="gcamp_world.world"/>
   <arg name="world_file" default="$(find fusionbot_gazebo_ros1)/worlds/$(arg world_name)"/>
-  <arg name="model_name"   default="tinybot"/>
+  <arg name="model_name"   default="fusionbot"/>
 
   <arg name="package_name"  default="fusionbot_gazebo_ros1" />
   <arg name="path"   value="(find $(arg package_name))" />

@@ -10,7 +10,7 @@
 </gazebo>
 
 <gazebo reference="camera_link">
-  <sensor name="zed_camera_left_sensor" type="camera">
+  <sensor name="front_camera" type="camera">
     <update_rate>30.0</update_rate>
     <visualize>false</visualize>
     <always_on>1</always_on>
@@ -34,101 +34,30 @@
       </noise>
     </camera>
     <plugin filename="libgazebo_ros_camera.so" name="camera_controller">
-      <ros>
-        <!-- <namespace>custom_ns</namespace> -->
-        <argument>image_raw:=image_raw</argument>
-        <argument>camera_info:=camera_info</argument>
-      </ros>
-      <camera_name>/front_camera</camera_name>
-      <frame_name>camera_link</frame_name>
-      <hack_baseline>0.07</hack_baseline>
+      <cameraName>front_camera</cameraName>
+      <imageTopicName>image_raw</imageTopicName>
+      <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+      <frameName>camera_link</frameName>
     </plugin>
   </sensor>
 </gazebo>
 
 <gazebo reference="imu_link">
+  <pose>0 0 0 0 0 0</pose>
   <gravity>true</gravity>
   <sensor name="imu_sensor" type="imu">
     <always_on>true</always_on>
-    <update_rate>100</update_rate>
     <visualize>true</visualize>
-    <!-- <imu>
-      <orientation>
-        <x>
-          <noise type="gaussian">
-            <mean>0.0</mean>
-            <stddev>2e-1</stddev>
-          </noise>
-        </x>
-        <y>
-          <noise type="gaussian">
-            <mean>0.0</mean>
-            <stddev>2e-1</stddev>
-          </noise>
-        </y>
-        <z>
-          <noise type="gaussian">
-            <mean>0.0</mean>
-            <stddev>2e-1</stddev>
-          </noise>
-        </z>
-      </orientation>
-      <angular_velocity>
-        <x>
-          <noise type="gaussian">
-            <mean>0.0</mean>
-            <stddev>2e-4</stddev>
-          </noise>
-        </x>
-        <y>
-          <noise type="gaussian">
-            <mean>0.0</mean>
-            <stddev>2e-4</stddev>
-          </noise>
-        </y>
-        <z>
-          <noise type="gaussian">
-            <mean>0.0</mean>
-            <stddev>2e-4</stddev>
-          </noise>
-        </z>
-      </angular_velocity>
-      <linear_acceleration>
-        <x>
-          <noise type="gaussian">
-            <mean>0.0</mean>
-            <stddev>1.7e-2</stddev>
-          </noise>
-        </x>
-        <y>
-          <noise type="gaussian">
-            <mean>0.0</mean>
-            <stddev>1.7e-2</stddev>
-          </noise>
-        </y>
-        <z>
-          <noise type="gaussian">
-            <mean>0.0</mean>
-            <stddev>1.7e-2</stddev>
-          </noise>
-        </z>
-      </linear_acceleration>
-    </imu> -->
-    <topic>imu</topic>
     <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-      <topicName>imu</topicName>
+      <topicName>/imu/data</topicName>
       <bodyName>imu_link</bodyName>
       <updateRateHZ>100.0</updateRateHZ>
       <xyzOffset>0 0 0</xyzOffset>
       <rpyOffset>0 0 0</rpyOffset>
+      <gaussianNoise>0.0</gaussianNoise>
       <frameName>imu_link</frameName>
       <initialOrientationAsReference>false</initialOrientationAsReference>
-      <ros>
-        <namespace>/imu</namespace>
-        <remapping>~/out:=data</remapping>
-      </ros>
     </plugin>
-    <pose>0 0 0 0 0 0</pose>
   </sensor>
 </gazebo>
 
@@ -137,7 +66,6 @@
     <pose>0 0 0 0 0 0</pose>
     <always_on>true</always_on>
     <visualize>false</visualize>
-    <update_rate>10</update_rate>
     <ray>
       <scan>
         <horizontal>
@@ -152,49 +80,33 @@
         <max>10.0</max>
         <resolution>0.05</resolution>
       </range>
-      <noise>
-        <type>gaussian</type>
-        <mean>0.0</mean>
-        <stddev>0.01</stddev>
-      </noise>
     </ray>
-    <plugin filename="libgazebo_ros_ray_sensor.so" name="scan">
-      <ros>
-        <remapping>~/out:=scan</remapping>
-      </ros>
-      <output_type>sensor_msgs/LaserScan</output_type>
-      <frame_name>lidar_1</frame_name>
+    <plugin filename="libgazebo_ros_laser.so" name="scan">
+      <topicName>scan</topicName>
+      <frameName>lidar_1</frameName>
+      <gaussianNoise>0.01</gaussianNoise>
+      <updateRate>10</updateRate>
     </plugin>
   </sensor>
 </gazebo>
 
 <gazebo>
-  <plugin name='fusionbot_joint_state' filename='libgazebo_ros_joint_state_publisher.so'>
-    <ros>
-      <remapping>~/out:=joint_states</remapping>
-    </ros>
-    <update_rate>30</update_rate>
-    <joint_name>right_wheel_joint</joint_name>
-    <joint_name>left_wheel_joint</joint_name>
-  </plugin>
-</gazebo>
-
-<gazebo>
   <plugin name='differential_drive_controller' filename='libgazebo_ros_diff_drive.so'>
-    <update_rate>30</update_rate>
-    <left_joint>left_wheel_joint</left_joint>
-    <right_joint>right_wheel_joint</right_joint>
-    <wheel_separation>0.2</wheel_separation>
-    <wheel_diameter>0.1</wheel_diameter>
-    <max_wheel_torque>50</max_wheel_torque>
-    <max_wheel_acceleration>1.0</max_wheel_acceleration>
-    <command_topic>cmd_vel</command_topic>
-    <publish_odom>1</publish_odom>
-    <publish_odom_tf>1</publish_odom_tf>
-    <publish_wheel_tf>0</publish_wheel_tf>
-    <odometry_topic>odom</odometry_topic>
-    <odometry_frame>odom</odometry_frame>
-    <robot_base_frame>base_footprint</robot_base_frame>
+    <updateRate>30</updateRate>
+    <leftJoint>left_wheel_joint</leftJoint>
+    <rightJoint>right_wheel_joint</rightJoint>
+    <wheelSeparation>0.2</wheelSeparation>
+    <wheelDiameter>0.1</wheelDiameter>
+    <wheelTorque>50</wheelTorque>
+    <wheelAcceleration>1.0</wheelAcceleration>
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>odom</odometryTopic>
+    <odometryFrame>odom</odometryFrame>
+    <publishWheelJointState>false</publishWheelJointState>
+    <robotBaseFrame>base_link</robotBaseFrame>
+    <publishWheelTF>false</publishWheelTF>
+    <publishOdomTF>true</publishOdomTF>
+    <publishTf>1</publishTf>
   </plugin>
 </gazebo>
 
