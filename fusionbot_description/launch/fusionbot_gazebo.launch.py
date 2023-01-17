@@ -9,7 +9,7 @@ from launch.substitutions import ThisLaunchFileDir
 from launch.actions import ExecuteProcess
 from launch.substitutions import LaunchConfiguration
 from launch.actions import SetEnvironmentVariable
-from launch.substitutions import EnvironmentVariable
+from launch.substitutions import Command, EnvironmentVariable, PathJoinSubstitution, FindExecutable
 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
@@ -20,18 +20,6 @@ def generate_launch_description():
 
     # Prepare Robot State Publisher Params
     description_pkg_path = os.path.join(get_package_share_directory('fusionbot_description'))
-    gazebo_model_path = os.path.join(description_pkg_path, 'models')
-    
-    world_pkg = os.path.join(get_package_share_directory('fusionbot_gazebo'))
-    world_path = os.path.join(world_pkg, 'world', 'gazebo_ros_elevator_demo.world')
-
-    if 'GAZEBO_MODEL_PATH' in os.environ:
-        os.environ['GAZEBO_MODEL_PATH'] += ":" + gazebo_model_path
-    else:
-        os.environ['GAZEBO_MODEL_PATH'] = gazebo_model_path
-
-    print(ansi("yellow"), "If it's your 1st time to download Gazebo model on your computer, it may take few minutes to finish.", ansi("reset"))
-
     pkg_gazebo_ros = FindPackageShare(package='gazebo_ros').find('gazebo_ros')   
 
     # Start Gazebo server
@@ -46,11 +34,22 @@ def generate_launch_description():
     )
 
     # Robot State Publisher
-    urdf_file = os.path.join(description_pkg_path, 'urdf', 'fusionbot.urdf')
+    urdf_file = os.path.join(description_pkg_path, 'urdf', 'fusionbot.urdf.xacro')\
+    robot_description_content = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name="xacro")]),
+            " ",
+            urdf_file,
+            " ",
+            "name:=fusionbot",
+            " ",
+            "prefix:=''",
+            " ",
+            "is_sim:=true",
+        ]
+    )
 
-    doc = xacro.parse(open(urdf_file))
-    xacro.process_doc(doc)
-    robot_description = {'robot_description': doc.toxml()}
+    robot_description = {"robot_description": robot_description_content}
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
