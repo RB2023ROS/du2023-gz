@@ -60,7 +60,7 @@ def generate_launch_description():
         joint_state_publisher_gui,
         robot_state_publisher,
         TimerAction(    
-            period=3.0,
+            period=5.0,
             actions=[rviz]
         ),
     ])
