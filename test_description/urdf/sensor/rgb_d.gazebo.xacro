@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<robot name="fusionbot" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<gazebo reference="depth_camera_link">
+  <sensor name="rgbd_camera" type="depth">
+    <update_rate>30.0</update_rate>
+    <visualize>false</visualize>
+    <always_on>1</always_on>
+    <camera name="rgbd_camera">
+      <!-- math.atan(320 / 687.8065795898438) * 2 -->
+      <horizontal_fov>0.8709216071359963</horizontal_fov>
+      <image>
+        <width>1280</width>
+        <height>720</height>
+        <format>R8G8B8</format>
+        <!-- <format>B8G8R8</format> -->
+      </image>
+      <depth_camera>
+      </depth_camera>
+      <clip>
+        <near>0.02</near>
+        <far>300</far>
+      </clip>
+      <noise>
+        <type>gaussian</type>
+        <mean>0.0</mean>
+        <stddev>0.00007</stddev>
+      </noise>
+    </camera>
+    <plugin filename="libgazebo_ros_camera.so" name="camera_controller">
+      <ros>
+        <!-- <namespace>custom_ns</namespace> -->
+        <remapping>rgbd_camera/image_raw:=rgbd_camera/image_raw</remapping>
+        <remapping>rgbd_camera/image_depth:=rgbd_camera/image_depth</remapping>
+        <remapping>rgbd_camera/camera_info:=rgbd_camera/camera_info</remapping>
+        <remapping>rgbd_camera/camera_info_depth:=rgbd_camera/camera_info_depth</remapping>
+        <remapping>rgbd_camera/points:=rgbd_camera/points</remapping>
+      </ros>
+      <camera_name>rgbd_camera</camera_name>
+      <frame_name>depth_camera_optical_link</frame_name>
+      <hack_baseline>0.07</hack_baseline>
+
+      <min_depth>0.01</min_depth>
+      <max_depth>300.0</max_depth>
+    </plugin>
+  </sensor>
+</gazebo>
+
+</robot>

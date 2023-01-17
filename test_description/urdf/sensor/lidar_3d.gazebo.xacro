@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<robot name="fusionbot" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<xacro:property name="M_PI" value="3.1415926535897931"/>
+
+<gazebo reference="lidar_3d">
+  <sensor name="velodyne_vlp_16" type="ray">
+    <pose>0 0 0 0 0 0</pose>
+    <always_on>true</always_on>
+    <visualize>false</visualize>
+    <update_rate>10</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>1875</samples>
+          <resolution>1.000000</resolution>
+          <min_angle>-${M_PI}</min_angle>
+          <max_angle>${M_PI}</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>16</samples>
+          <resolution>1</resolution>
+          <min_angle>-${15.0*M_PI/180.0}</min_angle>
+          <max_angle>${15.0*M_PI/180.0}</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.3</min>
+        <max>131.0</max>
+        <resolution>0.001</resolution>
+      </range>
+      <noise>
+        <type>gaussian</type>
+        <mean>0.0</mean>
+        <stddev>0.0</stddev>
+      </noise>
+    </ray>
+    <plugin filename="libgazebo_ros_ray_sensor.so" name="scan">
+      <ros>
+        <remapping>~/out:=point</remapping>
+      </ros>
+      <output_type>sensor_msgs/PointCloud</output_type>
+      <min_intensity>100.0</min_intensity>
+      <frame_name>lidar_3d</frame_name>
+    </plugin>
+  </sensor>
+</gazebo>
+
+
+</robot>
