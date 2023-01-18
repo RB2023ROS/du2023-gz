@@ -19,10 +19,10 @@ from osrf_pycommon.terminal_color import ansi
 def generate_launch_description():
 
     # Prepare Robot State Publisher Params
-    description_pkg_path = os.path.join(get_package_share_directory('fusionbot_description'))
+    description_pkg_path = os.path.join(get_package_share_directory('fusionbot_gazebo'))
     pkg_gazebo_ros = FindPackageShare(package='gazebo_ros').find('gazebo_ros')   
 
-    # Start Gazebo server
+    # Start Gazebo serverPathJoinSubstitution
     start_gazebo_server_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(pkg_gazebo_ros, 'launch', 'gzserver.launch.py')),
         # launch_arguments={'world': world_path}.items()
@@ -61,8 +61,9 @@ def generate_launch_description():
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
+        name='robot_state_publisher',
         output='screen',
-        parameters=[robot_description]
+        parameters=[{'use_sim_time': True}, robot_description],
     )
 
     # Joint State Publisher
@@ -81,7 +82,7 @@ def generate_launch_description():
     return LaunchDescription([
         start_gazebo_server_cmd,
         start_gazebo_client_cmd,
-        robot_state_publisher,
         joint_state_publisher,
+        robot_state_publisher,
         spawn_entity,
     ])

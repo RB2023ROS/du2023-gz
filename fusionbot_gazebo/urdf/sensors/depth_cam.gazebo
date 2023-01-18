@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<robot name="fusionbot" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<gazebo reference="depth_camera_link">
+  <sensor name="front_depth_camera" type="depth">
+    <update_rate>30.0</update_rate>
+    <visualize>false</visualize>
+    <always_on>1</always_on>
+    <camera name="front_depth_camera">
+      <!-- math.atan(320 / 687.8065795898438) * 2 -->
+      <horizontal_fov>0.8709216071359963</horizontal_fov>
+      <image>
+        <width>1280</width>
+        <height>720</height>
+        <format>R8G8B8</format>
+        <!-- <format>B8G8R8</format> -->
+      </image>
+      <clip>
+        <near>0.02</near>
+        <far>300</far>
+      </clip>
+      <noise>
+        <type>gaussian</type>
+        <mean>0.0</mean>
+        <stddev>0.00007</stddev>
+      </noise>
+    </camera>
+    <plugin filename="libgazebo_ros_camera.so" name="camera_controller">
+      <ros>
+        <namespace>custom_ns</namespace>
+        <!-- <remapping>front_depth_camera/image_raw:=front_depth_camera/image_raw</remapping>
+        <remapping>front_depth_camera/image_depth:=front_depth_camera/image_depth</remapping>
+        <remapping>front_depth_camera/camera_info:=front_depth_camera/camera_info</remapping>
+        <remapping>front_depth_camera/camera_info_depth:=front_depth_camera/camera_info_depth</remapping>
+        <remapping>front_depth_camera/points:=front_depth_camera/points</remapping> -->
+
+        <!-- <argument>front_depth_camera/image_raw:=front_depth_camera/image_demo</argument>
+        <argument>front_depth_camera/depth/image_raw:=front_depth_camera/depth_demo</argument>
+        <argument>front_depth_camera/camera_info:=front_depth_camera/raw_cam_info_demo</argument>
+        <argument>front_depth_camera/depth/camera_info:=front_depth_camera/depth_cam_info_demo</argument>
+        <argument>front_depth_camera/points:=front_depth_camera/points_demo</argument> -->
+      </ros>
+      <camera_name>front_depth_camera</camera_name>
+      <frame_name>depth_camera_link</frame_name>
+      <hack_baseline>0.07</hack_baseline>
+    </plugin>
+  </sensor>
+</gazebo>
+
+</robot>
