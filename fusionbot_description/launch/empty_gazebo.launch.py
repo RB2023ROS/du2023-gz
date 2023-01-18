@@ -34,15 +34,7 @@ def generate_launch_description():
     )
 
     # Robot State Publisher
-
-    # Method 1 - using urdf
-    urdf_file = os.path.join(description_pkg_path, 'urdf', 'fusionbot.urdf')
-
-    doc = xacro.parse(open(urdf_file))
-    xacro.process_doc(doc)
-    robot_description = {'robot_description': doc.toxml()}
-
-    # Method 2 - using xacro
+    # Method 1 - using xacro
     xacro_file = os.path.join(description_pkg_path, 'urdf', 'fusionbot.urdf.xacro')
     robot_description_content = Command(
         [
@@ -58,6 +50,13 @@ def generate_launch_description():
         ]
     )
     robot_description = {"robot_description": robot_description_content}
+
+    # Method 2 - using urdf
+    # urdf_file = os.path.join(description_pkg_path, 'urdf', 'fusionbot.urdf')
+
+    # doc = xacro.parse(open(urdf_file))
+    # xacro.process_doc(doc)
+    # robot_description = {'robot_description': doc.toxml()}
 
     robot_state_publisher = Node(
         package='robot_state_publisher',

@@ -40,22 +40,23 @@ include_directories(include)
 ament_python_install_package(${PROJECT_NAME})
 
 ##### Uncomment Below Lines for URDF auto-generatoin #####
-find_package(xacro REQUIRED)
-# Xacro files
-file(GLOB xacro_files urdf/*.urdf.xacro)
 
-foreach(it ${xacro_files})
-  # remove .xacro extension
-  string(REGEX MATCH "(.*)[.]xacro$" unused ${it})
-  set(output_filename ${CMAKE_MATCH_1})
+# find_package(xacro REQUIRED)
+# # Xacro files
+# file(GLOB xacro_files urdf/*.urdf.xacro)
 
-  # create a rule to generate ${output_filename} from {it}
-  xacro_add_xacro_file(${it} ${output_filename})
+# foreach(it ${xacro_files})
+#   # remove .xacro extension
+#   string(REGEX MATCH "(.*)[.]xacro$" unused ${it})
+#   set(output_filename ${CMAKE_MATCH_1})
 
-  list(APPEND urdf_files ${output_filename})
-endforeach(it)
+#   # create a rule to generate ${output_filename} from {it}
+#   xacro_add_xacro_file(${it} ${output_filename})
 
-add_custom_target(media_files ALL DEPENDS ${urdf_files})
+#   list(APPEND urdf_files ${output_filename})
+# endforeach(it)
+
+# add_custom_target(media_files ALL DEPENDS ${urdf_files})
 
 ############################################################
 
