@@ -241,7 +241,6 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <always_on>1</always_on>
         <mesh filename="/home/roadbalance/ros2_ws/install/fusionbot_description/share/fusionbot_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver"/>
@@ -347,7 +346,6 @@
     <parent link="base_link"/>
     <child link="left_wheel_1"/>
     <axis xyz="0.0 1.0 0.0"/>
-    <always_on>1</always_on>
   </joint>
   <joint name="imu_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0.0 0.0 0.05"/>
