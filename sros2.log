@@ -1,0 +1,91 @@
+sudo apt update && sudo apt install libssl-dev
+
+mkdir ~/sros2_demo
+cd ~/sros2_demo
+
+- Generate a keystore
+$ ros2 security create_keystore demo_keystore
+creating keystore: demo_keystore
+creating new CA key/cert pair
+creating governance file: demo_keystore/enclaves/governance.xml
+creating signed governance file: demo_keystore/enclaves/governance.p7s
+all done! enjoy your keystore in demo_keystore
+cheers!
+
+├── enclaves
+│   ├── governance.p7s
+│   └── governance.xml
+├── private
+│   ├── ca.key.pem
+│   ├── identity_ca.key.pem -> ca.key.pem
+│   └── permissions_ca.key.pem -> ca.key.pem
+└── public
+    ├── ca.cert.pem
+    ├── identity_ca.cert.pem -> ca.cert.pem
+    └── permissions_ca.cert.pem -> ca.cert.pem
+
+
+- Generate keys and certificates for the talker and listener nodes
+ros2 security create_key demo_keystore /talker_listener/talker
+ros2 security create_key demo_keystore /talker_listener/listener
+
+├── enclaves
+│   ├── governance.p7s
+│   ├── governance.xml
+│   └── talker_listener
+│       ├── listener
+│       │   ├── cert.pem
+│       │   ├── governance.p7s -> ../../governance.p7s
+│       │   ├── identity_ca.cert.pem -> ../../../public/identity_ca.cert.pem
+│       │   ├── key.pem
+│       │   ├── permissions_ca.cert.pem -> ../../../public/permissions_ca.cert.pem
+│       │   ├── permissions.p7s
+│       │   └── permissions.xml
+│       └── talker
+│           ├── cert.pem
+│           ├── governance.p7s -> ../../governance.p7s
+│           ├── identity_ca.cert.pem -> ../../../public/identity_ca.cert.pem
+│           ├── key.pem
+│           ├── permissions_ca.cert.pem -> ../../../public/permissions_ca.cert.pem
+│           ├── permissions.p7s
+│           └── permissions.xml
+├── private
+│   ├── ca.key.pem
+│   ├── identity_ca.key.pem -> ca.key.pem
+│   └── permissions_ca.key.pem -> ca.key.pem
+└── public
+    ├── ca.cert.pem
+    ├── identity_ca.cert.pem -> ca.cert.pem
+    └── permissions_ca.cert.pem -> ca.cert.pem
+
+
+
+- Define the SROS2 environment variables
+export ROS_SECURITY_KEYSTORE=~/sros2_demo/demo_keystore
+export ROS_SECURITY_ENABLE=true
+export ROS_SECURITY_STRATEGY=Enforce
+
+> These variables need to be defined in each terminal used for the demo. For convenience you can add it to your ~/.bashrc.
+
+- Run the demo
+# 
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+$ ros2 run demo_nodes_cpp talker --ros-args --enclave /talker_listener/talker
+[INFO] [1674083637.745126860] [rcl]: Found security directory: /home/roadbalance/sros2_demo/demo_keystore/enclaves/talker_listener/talker
+[INFO] [1674083638.764895901] [talker]: Publishing: 'Hello World: 1'
+[INFO] [1674083639.764799238] [talker]: Publishing: 'Hello World: 2'
+[INFO] [1674083640.764625332] [talker]: Publishing: 'Hello World: 3'
+
+
+# cyclone occurs err
+$ ros2 run demo_nodes_cpp talker --ros-args --enclave /talker_listener/talker
+[INFO] [1674083561.668276723] [rcl]: Found security directory: /home/roadbalance/sros2_demo/demo_keystore/enclaves/talker_listener/talker
+1674083561.678483 [29]     talker: Could not load Authentication library: dds_security_auth: cannot open shared object file: No such file or directory
+1674083561.678514 [29]     talker: Could not load Authentication plugin.
+1674083561.678522 [29]     talker: Could not load security
+[ERROR] [1674083561.679770529] [rmw_cyclonedds_cpp]: rmw_create_node: failed to create DDS participant
+
+> These nodes will be communicating using authentication and encryption! If you look at the packet contents on e.g. Wireshark, the messages will be encrypted.
+
+## Run the demo on different machines
+> copy & paste certificates

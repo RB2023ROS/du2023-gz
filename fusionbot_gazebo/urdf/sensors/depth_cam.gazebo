@@ -25,24 +25,33 @@
         <stddev>0.00007</stddev>
       </noise>
     </camera>
-    <plugin filename="libgazebo_ros_camera.so" name="camera_controller">
+    <plugin name="plugin_name" filename="libgazebo_ros_camera.so">
+      <!-- Change namespace, camera name and topics so -
+           * Raw images are published to: /custom_ns/custom_camera/custom_image
+           * Depth images are published to: /custom_ns/custom_camera/custom_image_depth
+           * Raw image camera info is published to: /custom_ns/custom_camera/custom_info_raw
+           * Depth image camera info is published to: /custom_ns/custom_camera/custom_info_depth
+           * Point cloud is published to: /custom_ns/custom_camera/custom_points
+      -->
       <ros>
         <namespace>custom_ns</namespace>
-        <!-- <remapping>front_depth_camera/image_raw:=front_depth_camera/image_raw</remapping>
-        <remapping>front_depth_camera/image_depth:=front_depth_camera/image_depth</remapping>
-        <remapping>front_depth_camera/camera_info:=front_depth_camera/camera_info</remapping>
-        <remapping>front_depth_camera/camera_info_depth:=front_depth_camera/camera_info_depth</remapping>
-        <remapping>front_depth_camera/points:=front_depth_camera/points</remapping> -->
-
-        <!-- <argument>front_depth_camera/image_raw:=front_depth_camera/image_demo</argument>
-        <argument>front_depth_camera/depth/image_raw:=front_depth_camera/depth_demo</argument>
-        <argument>front_depth_camera/camera_info:=front_depth_camera/raw_cam_info_demo</argument>
-        <argument>front_depth_camera/depth/camera_info:=front_depth_camera/depth_cam_info_demo</argument>
-        <argument>front_depth_camera/points:=front_depth_camera/points_demo</argument> -->
+        <remapping>custom_camera/image_raw:=custom_camera/custom_image</remapping>
+        <remapping>custom_camera/image_depth:=custom_camera/custom_image_depth</remapping>
+        <remapping>custom_camera/camera_info:=custom_camera/custom_info_raw</remapping>
+        <remapping>custom_camera/camera_info_depth:=custom_camera/custom_info_depth</remapping>
+        <remapping>custom_camera/points:=custom_camera/custom_points</remapping>
       </ros>
-      <camera_name>front_depth_camera</camera_name>
+
+      <!-- Set camera name. If empty, defaults to sensor name (i.e. "sensor_name") -->
+      <camera_name>custom_camera</camera_name>
+
+      <!-- Set TF frame name. If empty, defaults to link name (i.e. "link_name") -->
       <frame_name>depth_camera_link</frame_name>
       <hack_baseline>0.07</hack_baseline>
+
+      <!-- No need to repeat distortion parameters or to set autoDistortion -->
+      <min_depth>0.001</min_depth>
+      <max_depth>300.0</max_depth>
     </plugin>
   </sensor>
 </gazebo>
