@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 <robot name="fusionbot" xmlns:xacro="http://www.ros.org/wiki/xacro" >
 
+<xacro:property name="M_PI" value="3.1415926535897931" />
+
 <gazebo reference="lidar_1">
   <sensor name="lidar" type="ray">
     <pose>0 0 0 0 0 0</pose>
@@ -12,8 +14,8 @@
         <horizontal>
           <samples>360</samples>
           <resolution>1.000000</resolution>
-          <min_angle>-3.14159</min_angle>
-          <max_angle>3.14159</max_angle>
+          <min_angle>-${M_PI}</min_angle>
+          <max_angle>${M_PI}</max_angle>
         </horizontal>
       </scan>
       <range>
@@ -27,7 +29,7 @@
         <stddev>0.01</stddev>
       </noise>
     </ray>
-    <plugin filename="libgazebo_ros_ray_sensor.so" name="scan">
+    <plugin name="scan" filename="libgazebo_ros_ray_sensor.so">
       <ros>
         <remapping>~/out:=scan</remapping>
       </ros>

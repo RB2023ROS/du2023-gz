@@ -8,7 +8,9 @@
 <xacro:include filename="$(find fusionbot_gazebo)/urdf/sensors/mono_cam.gazebo" />
 <xacro:include filename="$(find fusionbot_gazebo)/urdf/sensors/depth_cam.gazebo" />
 <xacro:include filename="$(find fusionbot_gazebo)/urdf/sensors/lidar_2d.gazebo" />
+<xacro:include filename="$(find fusionbot_gazebo)/urdf/sensors/lidar_3d.gazebo" />
 <xacro:include filename="$(find fusionbot_gazebo)/urdf/sensors/imu.gazebo" />
+<xacro:include filename="$(find fusionbot_gazebo)/urdf/sensors/gps.gazebo" />
 
 <xacro:include filename="$(find fusionbot_gazebo)/urdf/controllers/diff_drive.gazebo" />
 
