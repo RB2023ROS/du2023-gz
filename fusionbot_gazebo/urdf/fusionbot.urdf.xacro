@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <robot name="fusionbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find fusionbot_description)/urdf/materials.xacro" />
-  <xacro:include filename="$(find fusionbot_description)/urdf/fusionbot.gazebo" />
+  <xacro:include filename="$(find fusionbot_gazebo)/urdf/materials.xacro" />
+  <xacro:include filename="$(find fusionbot_gazebo)/urdf/fusionbot.gazebo" />
 
   <link name='base_footprint' />
 
@@ -15,14 +15,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="$(find fusionbot_description)/meshes/base_link.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="$(find fusionbot_gazebo)/meshes/base_link.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <material name="silver" />
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="$(find fusionbot_description)/meshes/base_link.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="$(find fusionbot_gazebo)/meshes/base_link.stl" scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
   </link>
@@ -36,14 +36,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="-0.0 0.1 -0.05" />
       <geometry>
-        <mesh filename="$(find fusionbot_description)/meshes/right_wheel_1.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="$(find fusionbot_gazebo)/meshes/right_wheel_1.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <material name="silver" />
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="-0.0 0.1 -0.05" />
       <geometry>
-        <mesh filename="$(find fusionbot_description)/meshes/right_wheel_1.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="$(find fusionbot_gazebo)/meshes/right_wheel_1.stl" scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
   </link>
@@ -57,14 +57,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="-0.0 -0.1 -0.05" />
       <geometry>
-        <mesh filename="$(find fusionbot_description)/meshes/left_wheel_1.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="$(find fusionbot_gazebo)/meshes/left_wheel_1.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <material name="silver" />
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="-0.0 -0.1 -0.05" />
       <geometry>
-        <mesh filename="$(find fusionbot_description)/meshes/left_wheel_1.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="$(find fusionbot_gazebo)/meshes/left_wheel_1.stl" scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
   </link>
@@ -78,14 +78,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="-0.05 -0.0 -0.11" />
       <geometry>
-        <mesh filename="$(find fusionbot_description)/meshes/lidar_1.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="$(find fusionbot_gazebo)/meshes/lidar_1.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <material name="silver" />
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="-0.05 -0.0 -0.11" />
       <geometry>
-        <mesh filename="$(find fusionbot_description)/meshes/lidar_1.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="$(find fusionbot_gazebo)/meshes/lidar_1.stl" scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
   </link>

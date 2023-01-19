@@ -5,12 +5,12 @@
 <xacro:property name="lidar_color" value="Gazebo/Blue" />
 <xacro:property name="wheel_color" value="Gazebo/Black" />
 
-<xacro:include filename="$(find fusionbot_description)/urdf/sensors/mono_cam.gazebo" />
-<xacro:include filename="$(find fusionbot_description)/urdf/sensors/depth_cam.gazebo" />
-<xacro:include filename="$(find fusionbot_description)/urdf/sensors/lidar_2d.gazebo" />
-<xacro:include filename="$(find fusionbot_description)/urdf/sensors/imu.gazebo" />
+<xacro:include filename="$(find fusionbot_gazebo)/urdf/sensors/mono_cam.gazebo" />
+<xacro:include filename="$(find fusionbot_gazebo)/urdf/sensors/depth_cam.gazebo" />
+<xacro:include filename="$(find fusionbot_gazebo)/urdf/sensors/lidar_2d.gazebo" />
+<xacro:include filename="$(find fusionbot_gazebo)/urdf/sensors/imu.gazebo" />
 
-<xacro:include filename="$(find fusionbot_description)/urdf/controllers/diff_drive.gazebo" />
+<xacro:include filename="$(find fusionbot_gazebo)/urdf/controllers/diff_drive.gazebo" />
 
 <gazebo>
   <plugin filename="libgazebo_ros_control.so" name="control"/>
