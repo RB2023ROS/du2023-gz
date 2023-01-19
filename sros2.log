@@ -1,4 +1,24 @@
 sudo apt install ros-foxy-rmw-connext-cpp -y
+
+```
+SOFTWARE LICENSE FOR NON-COMMERCIAL & PRE-COMMERCIAL USE
+
+PLEASE READ THIS AGREEMENT CAREFULLY BEFORE DOWNLOADING, INSTALLING, OR USING THIS PRODUCT. THIS AGRE
+EMENT GRANTS THE ORIGINAL LICENSEE OF THE SOFTWARE (“YOU”) THE RIGHT TO USE THIS PRODUCT FOR SPECIFIE
+D PURPOSES. THIS AGREEMENT STATES THE TERMS AND CONDITIONS UPON WHICH REAL-TIME INNOVATIONS, INC. (“R
+TI”) OFFERS OR ACCEPTS YOUR OFFER TO LICENSE THE SOFTWARE (AS DEFINED IN 1.a. BELOW) TO YOU.  BY DOWN
+LOADING, INSTALLING, AND/OR USING THIS PRODUCT, YOU ARE AGREEING TO BE BOUND BY THE TERMS OF THIS AGR
+EEMENT. IF YOU DO NOT AGREE TO THE TERMS OF THIS AGREEMENT, DO NOT DOWNLOAD, INSTALL, OR USE THIS PRO
+DUCT.
+
+The Software is protected by RTI copyright.  You may use or distribute the Software only under these 
+terms.
+
+1. Definitions
+...
+Do you accept the terms of this license agreement?: yes
+```
+
 sudo apt update && sudo apt install libssl-dev
 
 mkdir ~/sros2_demo
@@ -71,38 +91,54 @@ export ROS_SECURITY_STRATEGY=Enforce
 - Run the demo
 # 
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-export RMW_IMPLEMENTATION=rmw_connextdds
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+> 이거 됨? 확인 필요
+export RMW_IMPLEMENTATION=rmw_connextdds
+
+connext_dds => security plugin 깔아야 한다.
+https://www.rti.com/free-trial
+
 
 > Note that secure communication between vendors is not supported.
 
-$ ros2 run demo_nodes_cpp talker --ros-args --enclave /talker_listener/talker
+
+If you look at the packet contents on e.g. Wireshark, the messages will be encrypted.
+ros2 run demo_nodes_cpp talker
+ros2 run demo_nodes_cpp talker --ros-args --enclave /talker_listener/talker
 [INFO] [1674083637.745126860] [rcl]: Found security directory: /home/roadbalance/sros2_demo/demo_keystore/enclaves/talker_listener/talker
 [INFO] [1674083638.764895901] [talker]: Publishing: 'Hello World: 1'
 [INFO] [1674083639.764799238] [talker]: Publishing: 'Hello World: 2'
 [INFO] [1674083640.764625332] [talker]: Publishing: 'Hello World: 3'
 
-
 # cyclone occurs err
-$ ros2 run demo_nodes_cpp talker --ros-args --enclave /talker_listener/talker
+ros2 run demo_nodes_cpp talker --ros-args --enclave /talker_listener/talker
 [INFO] [1674083561.668276723] [rcl]: Found security directory: /home/roadbalance/sros2_demo/demo_keystore/enclaves/talker_listener/talker
 1674083561.678483 [29]     talker: Could not load Authentication library: dds_security_auth: cannot open shared object file: No such file or directory
 1674083561.678514 [29]     talker: Could not load Authentication plugin.
 1674083561.678522 [29]     talker: Could not load security
 [ERROR] [1674083561.679770529] [rmw_cyclonedds_cpp]: rmw_create_node: failed to create DDS participant
 
-$ ros2 run demo_nodes_cpp listener --ros-args --enclave /talker_listener/listener
+ros2 run demo_nodes_cpp listener
+ros2 run demo_nodes_cpp listener --ros-args --enclave /talker_listener/listener
 [INFO] [1674130814.081593263] [listener]: I heard: [Hello World: 7]
 [INFO] [1674130815.081480624] [listener]: I heard: [Hello World: 8]
 [INFO] [1674130816.081429999] [listener]: I heard: [Hello World: 9]
 
 > python도 가능
-$ ros2 run demo_nodes_py listener --ros-args --enclave /talker_listener/listener
+ros2 run demo_nodes_py listener --ros-args --enclave /talker_listener/listener
 [INFO] [1674130846.091943408] [listener]: I heard: [Hello World: 39]
 [INFO] [1674130847.081611295] [listener]: I heard: [Hello World: 40]
 
 > These nodes will be communicating using authentication and encryption! If you look at the packet contents on e.g. Wireshark, the messages will be encrypted.
 
+내가 짠 코드 적용해보기
+
+
+colcon build --packages-select py_topic_tutorial --cmake-args -DSECURITY=ON
+ros2 run py_topic_tutorial topic_pub_node --ros-args --enclave /talker_listener/talker
+
+
 ## Run the demo on different machines
 > copy & paste certificates
+
 
