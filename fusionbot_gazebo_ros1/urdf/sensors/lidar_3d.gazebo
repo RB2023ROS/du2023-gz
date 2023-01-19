@@ -8,7 +8,7 @@
     <pose>0 0 0 0 0 0</pose>
     <always_on>true</always_on>
     <visualize>false</visualize>
-    <update_rate>10</update_rate>
+    <updateRate>10</updateRate>
     <ray>
       <scan>
         <horizontal>
@@ -29,21 +29,24 @@
         <max>131.0</max>
         <resolution>0.001</resolution>
       </range>
-      <noise>
+      <!-- <noise>
         <type>gaussian</type>
         <mean>0.0</mean>
         <stddev>0.0</stddev>
-      </noise>
+      </noise> -->
     </ray>
-    <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_ray_sensor.so">
-      <ros>
-        <!-- <namespace>/</namespace> -->
-        <remapping>~/out:=/velodyne_points</remapping>
-      </ros>
-      <frame_name>lidar_3d_link</frame_name>
-      <organize_cloud>false</organize_cloud>
-      <min_range>0.9</min_range>
-      <max_range>130.0</max_range>
+    <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_block_laser.so">
+      <!-- <fov>0.17453293</fov> -->
+      <topicName>velodyne_points</topicName>
+      <frameName>lidar_3d_link</frameName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <updateRate>30</updateRate>
+      <hokuyoMinIntensity>100.0</hokuyoMinIntensity>
+
+      <!-- <topicName>/rrbot/laser/pointcloud</topicName>
+      <frameName>block_laser_link</frameName>
+      <gaussianNoise>0.01</gaussianNoise>
+      <updateRate>30</updateRate> -->
     </plugin>
   </sensor>
 </gazebo>

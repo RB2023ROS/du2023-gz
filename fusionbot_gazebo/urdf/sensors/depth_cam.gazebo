@@ -28,11 +28,11 @@
     <plugin filename="libgazebo_ros_camera.so" name="camera_controller">
       <ros>
         <!-- <namespace>custom_ns</namespace> -->
-        <remapping>front_depth_camera/image_raw:=front_depth_camera/custom_image</remapping>
-        <remapping>front_depth_camera/image_depth:=front_depth_camera/custom_image_depth</remapping>
-        <remapping>front_depth_camera/camera_info:=front_depth_camera/custom_info_raw</remapping>
-        <remapping>front_depth_camera/camera_info_depth:=front_depth_camera/custom_info_depth</remapping>
-        <remapping>front_depth_camera/points:=front_depth_camera/custom_points</remapping>
+        <remapping>front_depth_camera/image_raw:=front_depth_camera/image_raw</remapping>
+        <remapping>front_depth_camera/image_depth:=front_depth_camera/image_depth</remapping>
+        <remapping>front_depth_camera/camera_info:=front_depth_camera/camera_info</remapping>
+        <remapping>front_depth_camera/camera_info_depth:=front_depth_camera/camera_info_depth</remapping>
+        <remapping>front_depth_camera/points:=front_depth_camera/points</remapping>
       </ros>
       
       <camera_name>front_depth_camera</camera_name>
